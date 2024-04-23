@@ -18,4 +18,10 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, HOST);
+
+// Mit der Anweisung console.log() wird dem Server-Administrator auf der Konsole 
+//angezeigt, was der Server macht. Der Programmierer schreibt dazu 
+// in die runden Klammern den Ausdruck, der auf der Konsole angezeigt werden soll
+// Die Werte der beiden Konstanten HOST und PORT werden in den
+// Ausdruck übergeben. Ein Verb mit anschließenden runden Klammern steht immer für eine Anweisung etwas zu tun.
 console.log(`Running on http://${HOST}:${PORT}`);
