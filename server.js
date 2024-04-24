@@ -14,7 +14,15 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-	res.send('Hello remote world!\n');
+
+	
+	//res ist die Antwort des Servers an den Browser
+	//send() ist die Anweisung etwas an den Browser zu schicken
+	//res.send('Hello remote world!\n');
+
+	//Das res-Objekt kann noch mehr als nur ein Zeichenkette an den Browser zu senden.
+	//Das res-Objekt kann mit der Funktion render() eine HTML-Datei an den Browser senden 
+	res.render('index.ejs',{});
 });
 
 app.listen(PORT, HOST);
