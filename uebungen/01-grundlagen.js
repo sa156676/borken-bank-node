@@ -123,4 +123,77 @@ console.log(' Der Mehrwertsteuersatz für den Artikel ' + artikel + ' beträgt '
 console.log ('Aufgabe 10');
 console.log(' Hausaufgabe : Eigene Aufgabe mit Wenn-Funktion / if-else-Ausdruck ');
 
-let 
+console.log('Wenn der Gesamtbetrag des Einkaufs grösser oder gleich 100 € ist, beträgt der Rabatt 20%');
+console.log('Ansonsten gibt es keinen Rabatt');
+
+// die Variablen werden deklariert und der Gesamtbetrag mit dem Wert 120 initialisiert.
+let Gesamtbetrag = 120;
+let Rabatt = 20; 
+
+// Die if Kontrollstruktur kann zwei Fälle unterscheiden. 
+if (Gesamtbetrag >= 100) {
+    // Wenn die Prüfung in der Runden Klammer wahr ist, wird der Wert 20 zugewiesen.
+    Rabatt = 20;
+}else{
+    Rabatt = 0;
+}
+
+console.log('Aufgabe 11');
+
+console.log('Wenn der Gesamtbetrag des Einkaufs grösser oder gleich 100 € ist, beträgt der Rabatt 20 %');
+console.log('wenn der Gesamtbetrag des Einkaufs zwischen 50 und kleiner 100 € ist, beträgt der Rabatt 10 %');
+console.log('Ansonsten gibt es keinen Rabatt');
+
+Gesamtbetrag = 120;
+Rabatt = 20;
+
+// Hier werden drei Fälle unterschieden. Dazu muss die if Kontrollstruktur verschachtelt werden.
+if (Gesamtbetrag >= 100){
+    Rabatt = 10;
+}else{
+    if (Gesamtbetrag >= 50) {
+        Rabatt = 10;
+    }else{
+        Rabatt = 0;
+    }
+}
+
+console.log('Aufgabe 12');
+console.log('Wenn der Gesamtbetrag des Einkaufs grösser oder gleich 200 ist, ist der versand kostenlos.');
+console.log('Wenn der Gesamtbetrag des Einkaufs zwischen 100 und kleiner als 200, betragen die Versandkosten 5 €');
+console.log('Ansonsten betragen die Versandkosten 10 €');
+
+let Einkaufswert = 200;
+let Versandkosten;
+
+if ( Einkaufswert >= 200 ) {
+    Versandkosten = 0;
+}else{
+    if ( Einkaufswert >= 100 ){
+        Versandkosten = 5;
+    }else{
+        Versandkosten = 10;
+    }
+}
+console.log(' Bei einem Einkaufswert von ' + Einkaufswert +' Euro betragen die Versandkosten ' + Versandkosten + ' Euro.');
+
+console.log('Aufgabe 13');
+console.log(' Frauen ab 18 zahlen 10 € Eintritt. Männer ab 18 zahlen 15 €. Minderjährige zahlen 6 €');
+
+let Eintritt;
+let Alter = 10;
+let geschlecht = 'M';
+
+if (geschlecht === 'W' && alter >= 18){
+    Eintritt === 10;
+}
+
+if (geschlecht === 'M' && Alter >=18){
+    Eintritt === 15;
+}
+
+if ( Alter < 18){
+    Eintritt === 6;
+}
+
+console.log(' Bei einem Altrer von ' + Alter + ' Jahren zahlt eine Person mit Geschlecht ' + geschlecht + ' #');
