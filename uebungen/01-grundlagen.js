@@ -197,3 +197,18 @@ if ( Alter < 18){
 }
 
 console.log(' Bei einem Altrer von ' + Alter + ' Jahren zahlt eine Person mit Geschlecht ' + geschlecht + ' #');
+
+console.log('Aufgabe 14');
+console.log('Überprüfe ob eine Person Alt genug ist um Auto zu fahren');
+console.log('Wenn die Person 18 Jahre oder älter ist dann soll die Antwort "JA" lauten,');
+console.log('Wenn nicht dann soll die Antwort "NEIN" lauten');
+
+let alter = 20;
+
+if(alter >= 18) {
+    console.log('JA');
+} else {
+    console.log('NEIN');
+}
+
+
