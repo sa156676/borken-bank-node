@@ -13,6 +13,14 @@ const HOST = '0.0.0.0';
 
 // App
 const app = express();
+
+// Es wird der App bekanntgegeben, wo die styles zu finden sind 
+app.use(express.static('public'))
+
+
+
+
+
 app.get('/', (req, res) => {
 
 	
@@ -37,5 +45,7 @@ console.log(`Running on http://${HOST}:${PORT}`);
 //require('./uebungen/01-grundlagen.js');
 
 //require('./uebungen/03-objekte.js');
-require('./Klausuren/klausurtest20240930.js');
+//require('./Klausuren/klausurtest20240930.js');
+//require('./uebungen/04-funktionen')
+
 
