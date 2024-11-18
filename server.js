@@ -33,6 +33,20 @@ app.get('/', (req, res) => {
 	res.render('index.ejs',{});
 });
 
+// Wenn im Browser die Adresse .../agb aufgerufen wird, wird der Server aufgefordert,
+// die angefragte Seite an den Browser zurückzugeben .
+// Der Server arbeitet dazu die Funktion app.get('agb) ... ab.
+app.get('/agb',(req,res)=>{
+
+    // Der Server gibt die gerenderte EJS-Seite an den Browser zurück. 
+    res.render('agb.ejs' ,{});
+})
+
+app.get('/hilfe',(req, res)=>{
+
+	res.render('hilfe.ejs', {})
+})
+
 app.listen(PORT, HOST);
 
 // Mit der Anweisung console.log() wird dem Server-Administrator auf der Konsole 
