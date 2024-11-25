@@ -1,13 +1,15 @@
 h1{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:'Times New Roman', Times, serif;
     font-size:xx-large;
     font-weight: 500;   
-    color:#1ee481;
+    color:#e41e1e79;
+    text-decoration:underline;
 }
 
 h2{
-    font-family: Arial, Helvetica, sans-serif;
-    color: #1ee481;
+    font-family:'Times New Roman', Times, serif;
+    color: #e41e1e79;
+    font-style: italic;
 }
 
 p{
@@ -15,13 +17,14 @@ p{
 }
 
 footer{
-    background-color: gray;
+    background-color: #e41e1e79;;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    color: white;
 }
 
 header{
-    background-color: gray;
+    background-color:  #e41e1e79;;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
     font-size: xx-large;
@@ -38,14 +41,20 @@ eine Class wird in der styles.css immer mit einem führenden Punkt dargestellt.*
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    background-color: DodgerBlue;    
+    background-color: rgba(241, 229, 201, 0.582);    
   }
   /* Der folgende Style wirkt auf ale DIVs innerhalb eines flex-containers*/
   .flex-container > div {
-    background-color: #1ee481;
+    background-color: #e41e1e79;
     width: 100%;
     margin: 10px;
     text-align: center;
     line-height: 75px;
     font-size: 30px;
+  }
+
+  button {
+    background-color:  rgba(241, 229, 201, 0.582);
+    font-style: italic;
+    
   }

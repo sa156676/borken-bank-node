@@ -47,6 +47,16 @@ app.get('/hilfe',(req, res)=>{
 	res.render('hilfe.ejs', {})
 })
 
+app.get('/geldAnlegen', (req, res) => {
+	res.render('geldAnlegen.ejs',{
+		Betrag: 100
+	});
+});
+
+app.post('/geldAnlegen', (req, res) => {
+	res.render('geldAnlegen.ejs',{});
+});
+
 app.listen(PORT, HOST);
 
 // Mit der Anweisung console.log() wird dem Server-Administrator auf der Konsole 
