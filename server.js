@@ -1,7 +1,19 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+class Kunde{
+	constructor(){
+		this.Nachname
+		this.Vorname
+		this.Benutzername
+		this.Kennwort
+	}
+}
+
+let kunde = new Kunde();
+kunde.Nachname = "Kiff"
+kunde.Vorname = "Pit"
+kunde.Benutzername = "pk"
+kunde.Kennwort = "123"
+
+
 
 'use strict';
 
@@ -55,6 +67,39 @@ app.get('/hilfe',(req, res)=>{
 	res.render('hilfe.ejs', {})
 })
 
+app.get('/login', (req, res) => {
+	res.render('login.ejs',{
+		Meldung: "Alles easy."
+	});
+});
+
+app.post('/login', (req, res) => {
+
+	let benutzername = req.body.IdKunde;
+	console.log("login: Benutzername: " + benutzername)
+
+	let kennwort = req.body.Kennwort;
+	console.log("login: Kennwort: " + kennwort)
+
+	// Es muss geprüft werden, ob der Kunde mit diesem Benutzername das richtige Kennwort eingegeben hat.
+
+	let meldung = "";
+
+	if(kunde.Benutzername == benutzername && kunde.Kennwort == kennwort){
+    console.log("Die Zugangsdaten wurden kirrekt einegegeben.")
+	meldung = "Die Zugangsdaten wurden korrekt eingegeben"
+	}else{
+		console.log("Die Zugangsdaten wurden NICHT korrekt eingegeben.")
+		meldung = "Die Zugangsdaten wurden NICHT korrekt eingegeben"
+	}
+
+	res.render('login.ejs', {
+		Meldung: "Sie wurden erfolgreich angemeldet"
+	});
+});
+
+
+
 // Die Funktion app.get ('/geldAnlegen...) wir abgearbeitet, wenn der Benutzer die Seite geldAnlegen
 // im Browser ansurft/ anklickt. 
 
@@ -68,7 +113,7 @@ app.get('/geldAnlegen', (req, res) => {
         // In der gelAnlegen.ejs gibt es die Variable Betrag und Laufzeit.
 		// Der Server übergibt die folgenden Werte an den Browser. 
 
-		Betrag: 100,
+		Betrag: 100, 
 	});
 });
 

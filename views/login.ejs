@@ -9,20 +9,23 @@
     <title>Borken-Bank - Login</title>
 </head>
 <body>
-    <!--Der haeder soll die Seite strukturieren und bekommt entsprechende Styles zugwiesen-->
+    <!--Der header soll die Seite strukturieren und bekommt entsprechende Styles zugwiesen-->
     <header>
         <!--Überschrift der Seite-->
         <h1>Herzlich Willkommen bei der Borken-Bank</h1>
     </header>
     <!--Formularfelder (Textboxen, Button etc.) müssen in form-Tags eingebettet werden-->
-    <form>
+    <form method="post">
         <!--Die Labels beschreiben die Textboxen. br bricht die Zeile um.-->
         <label>Benutzername</label><br>
-        <input><br>
+        <input name="IdKunde" ><br>
         <label>Kennwort</label><br>
-        <input type="password"><br>
-        <button>Einloggen</button>
+        <!--type password maskiert die Eingabe mit Sternchen-->
+        <input type="password" name="Kennwort"><br>
+        <button formaction="/login">Einloggen</button>
     </form>
+
+    <p><%= Meldung %></p>
 
     Besuchen Sie gerne unsere Homepage ! 
     
