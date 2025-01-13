@@ -13,6 +13,22 @@ kunde.Vorname = "Pit"
 kunde.Benutzername = "pk"
 kunde.Kennwort = "123"
 
+class Kundenberater{
+	constructor(){
+		this.Nachname
+		this.Vorname
+		this.Telefonnummer
+		this.Email
+		this.Bild
+	} 
+}
+
+let kundenberater = new Kundenberater();
+kundenberater.Nachname = "Pass"
+kundenberater.Vorname = "Hildegard"
+kundenberater.Telefonnummer = "12345 6789"
+kundenberater.Email = "h.pass@borken-bank.de"
+kundenberater.Bild = "pass.jpg"
 
 
 'use strict';
