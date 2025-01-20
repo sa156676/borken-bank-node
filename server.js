@@ -1,18 +1,24 @@
+//Klassendefinition des Kunden 
 class Kunde{
 	constructor(){
 		this.Nachname
 		this.Vorname
 		this.Benutzername
 		this.Kennwort
+		this.IstEingeloggt
 	}
 }
 
+//Kundenobjekt deklariert und instanziiert
 let kunde = new Kunde();
+
+//Kundenobjekt initialisiert 
 kunde.Nachname = "Kiff"
 kunde.Vorname = "Pit"
 kunde.Benutzername = "pk"
 kunde.Kennwort = "123"
 
+//Klassendefinition des Kundenberaters 
 class Kundenberater{
 	constructor(){
 		this.Nachname
@@ -23,7 +29,10 @@ class Kundenberater{
 	} 
 }
 
+//Deklaration und Instanziierung
 let kundenberater = new Kundenberater();
+
+//Initialisierung
 kundenberater.Nachname = "Pass"
 kundenberater.Vorname = "Hildegard"
 kundenberater.Telefonnummer = "12345 6789"
@@ -56,17 +65,32 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 
 
-
+//Die app.get wird abgearbeitet, sobald die Index-Seite angesurft wird 
 app.get('/', (req, res) => {
 
 	
 	//res ist die Antwort des Servers an den Browser
 	//send() ist die Anweisung etwas an den Browser zu schicken
+	//'Hello ...' ist der Wert, der an die Anweisung send() übergeben wird. 
 	//res.send('Hello remote world!\n');
 
-	//Das res-Objekt kann noch mehr als nur ein Zeichenkette an den Browser zu senden.
+	//Das res-Objekt kann noch mehr als nur ein Zeichenk ette an den Browser zu senden.
 	//Das res-Objekt kann mit der Funktion render() eine HTML-Datei an den Browser senden 
-	res.render('index.ejs',{});
+	
+	if(kunde.IstEingeloggt){
+
+		//Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert. 
+		res.render('index.ejs',{});
+
+	}else{
+
+		//Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite gerendert. 
+		res.render('login.ejs',{
+			Meldung: "Melden sie sich zuerst an."
+		});
+
+	}
+
 });
 
 // Wenn im Browser die Adresse .../agb aufgerufen wird, wird der Server aufgefordert,
@@ -83,12 +107,19 @@ app.get('/hilfe',(req, res)=>{
 	res.render('hilfe.ejs', {})
 })
 
+//Die app.get wird abgearbeitet, wenn die Seite im Browser angesurft wird.
 app.get('/login', (req, res) => {
+
+    kunde.IstEingeloggt = false;
+	console.log("kunde,IstEingeloggt:" + kunde.IstEingeloggt)
+
+
 	res.render('login.ejs',{
-		Meldung: "Alles easy."
+		Meldung: "Bitte Benutzername und Kennwort eingeben."
 	});
 });
 
+//Die app.post wird abgearbeitet, wenn das Formular auf der Seite abgesendet wird 
 app.post('/login', (req, res) => {
 
 	let benutzername = req.body.IdKunde;
@@ -101,17 +132,29 @@ app.post('/login', (req, res) => {
 
 	let meldung = "";
 
+	//Die Kontrollstruktur prüft auf die Korrektheit der Zugangsdaten 
 	if(kunde.Benutzername == benutzername && kunde.Kennwort == kennwort){
     console.log("Die Zugangsdaten wurden kirrekt einegegeben.")
 	meldung = "Die Zugangsdaten wurden korrekt eingegeben"
+	kunde.IstEingeloggt = true;
+
+
+	//Wenn die Eingabedaten korrekt sind, dann wird die Index-Seite gerendert.
+	res.render('index.ejs', {
+		Meldung: meldung
+	});
+
 	}else{
 		console.log("Die Zugangsdaten wurden NICHT korrekt eingegeben.")
-		meldung = "Die Zugangsdaten wurden NICHT korrekt eingegeben"
+		meldung = "Die Zugangsdaten wurden NICHT korrekt eingegeben."
+
+		//Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite erneut gerendert.
+		res.render('login.ejs', {
+			Meldung: meldung
+		});
 	}
 
-	res.render('login.ejs', {
-		Meldung: "Sie wurden erfolgreich angemeldet"
-	});
+	
 });
 
 
@@ -171,5 +214,3 @@ console.log(`Running on http://${HOST}:${PORT}`);
 //require('./uebungen/03-objekte.js');
 //require('./Klausuren/klausurtest20240930.js');
 //require('./uebungen/04-funktionen')
-
-
