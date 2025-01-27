@@ -5,7 +5,10 @@ class Kunde{
 		this.Vorname
 		this.Benutzername
 		this.Kennwort
+		//IstEingeloggt ist ein boolean.
+		//Der Wert ist entweder wahr oder falsch.
 		this.IstEingeloggt
+
 	}
 }
 
@@ -47,6 +50,8 @@ kundenberater.Bild = "pass.jpg"
 const express = require('express');
 const bodyParser = require('express');
 
+
+
 // Constants
 const PORT = 3000;
 const HOST = '0.0.0.0';
@@ -61,6 +66,9 @@ app.set('view engine', 'ejs')
 // Der Bodyparser wird in der App eingebunden 
 
 app.use(bodyParser.urlencoded({extended: true}))
+
+
+
 
 
 
@@ -122,9 +130,11 @@ app.get('/login', (req, res) => {
 //Die app.post wird abgearbeitet, wenn das Formular auf der Seite abgesendet wird 
 app.post('/login', (req, res) => {
 
+	//Der Benutzername wird vom Browser an den Server übergeben
 	let benutzername = req.body.IdKunde;
 	console.log("login: Benutzername: " + benutzername)
 
+	//Das Kennwort wird vom Browser an den Server übergeben.
 	let kennwort = req.body.Kennwort;
 	console.log("login: Kennwort: " + kennwort)
 
