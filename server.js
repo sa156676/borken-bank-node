@@ -66,6 +66,23 @@ const cookieParser = require('cookie-parser');
 //    Der Server weiß dadurch, mit welchem Kunde er es zu tun hat. 
 //    so ermöglichen wir, dass mehrere Kunden gleichzeitig mit dem Server interagieren können.
 
+// Die Bibliothek email-validator prüft emails auf syntaktische Korrektheit.
+// Die Anforderungen an gültige Mails sind exakt festgelegt im RFC 5322
+
+const validator = require("email-validator"); 
+
+// Die Funktion validate wird auf das validator-Objekt aufgerufen.
+// Als Parameter wird eine Mail-Adresse an die Funktion übergeben.
+// Der Rückgabewert der Funktion ist true oder false.
+validator.validate("test@email.com"); // true 
+
+ if(validator.validate("stefan.baeumer@berufskolleg-borken.de")){
+	console.log("Gültige Email.")
+}else{
+	console.log("Ungültige Email.")
+}
+
+
 
 
 // Constants
