@@ -1,3 +1,6 @@
+const IBANValidator = require('iban-validator-js');
+
+
 //Klassendefinition des Kunden 
 class Kunde{
 	constructor(){
@@ -258,6 +261,43 @@ app.post('/geldAnlegen', (req, res) => {
 		Meldung: "Ihre Zinsen betragen : " + zinsen
 	});
 });
+
+app.get('/kontenuebersicht', (req, res) => {
+	
+	if(kunde.IstEingeloggt){
+
+		// Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert.
+		res.render('kontenuebersicht.ejs',{});
+
+	}else{
+		
+		// Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite gerendert.
+		res.render('login.ejs',{
+			Meldung: "Melden Sie sich zuerst an."
+		});
+	}
+});
+
+app.post('/kontenuebersicht', (req, res) => {
+	if(kunde.IstEingeloggt){
+
+		let Kontonummer = req.body.Kontonummer;
+		console.log("Kontonummer: " + Kontonummer)
+
+		let bankleitzahl = "40154530"
+
+		
+		res.render('kontenuebersicht.ejs',{
+			Kontonummer: "",
+			Meldung: ""
+		});
+	}else{
+		res.render('login.ejs',{
+			...
+		})
+	}
+})
+
 
 app.listen(PORT, HOST);
 
