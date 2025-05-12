@@ -1,6 +1,11 @@
 const IBANValidator = require('iban-validator-js');
 
 
+const sqlite3 = require('sqlite3').verbose();
+
+
+
+
 //Klassendefinition des Kunden 
 class Kunde{
 	constructor(){
