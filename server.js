@@ -1,7 +1,72 @@
 const IBANValidator = require('iban-validator-js');
 
+// Das sqlite3-Modul muss im Terminal installiert werden: npm install sqlite3
+const sqlite3 = require('sqlite3').verbose(); // Importiert das sqlite3-Modul
 
-const sqlite3 = require('sqlite3').verbose();
+// Neue SQLite-Datenbankverbindung erstellen (Datei: bank.db)
+const db = new sqlite3.Database('./bank.db', (err) => {
+ 
+	// Wenn err ungleich null ist, dann wird die Fehlermeldung auf der Konsole ausgegeben. 
+	// Wenn err gleich null ist, dann wird die Erfolgsmeldung auf der Konsole ausgegeben. 
+	if (err) {
+        console.error('Fehler beim Öffnen der Datenbank:', err.message);
+    } else {
+        console.log('Verbindung zur SQLite-Datenbank hergestellt.');
+    }
+});
+
+// Tabelle "Kunde" anlegen, falls sie noch nicht existiert
+// Tabellen werden angelegt mt dem Befehl CREATE TABLE
+// IF NOT EXISTS sorgt dafür, dass die Tabelle nur einmal angelegt wird.
+// PRIMARY KEY ist der Primärschlüssel der Tabelle. Der Primärschlüssel ist dasjenige
+// Attribut, das den Datensatz eindeutig identifiziert.
+// AUTOINCREMENT sorgt dafür, dass der Primärschlüssel automatisch hochgezählt wird.
+// Für jedes Attribut muss der Datentyp angegeben werden.
+// TEXT ist ein Datentyp, der eine Zeichenkette speichert.
+// INTEGER ist ein Datentyp, der eine ganze Zahl speichert.
+// NOT NULL sorgt dafür, dass das Attribut nicht leer sein darf.
+
+db.serialize(() => {
+    db.run(`
+        CREATE TABLE IF NOT EXISTS Kunde (
+            KundenNr INTEGER PRIMARY KEY AUTOINCREMENT,
+            Nachname TEXT NOT NULL,
+            Vorname TEXT NOT NULL,
+            Wohnort TEXT,
+            PLZ TEXT,
+            Strasse TEXT,
+            Kennwort TEXT NOT NULL,
+            Benutzername TEXT NOT NULL
+        )
+    `);
+
+    // Suche alle Kunden in der Tabelle "Kunde"
+    db.get("SELECT COUNT(*) AS count FROM Kunde", (err, row) => {
+       
+		// Wenn keine einzige Zeile gefunden wurde, ...
+		if (row.count === 0) {
+			
+			// ... dann wird ein Beispielkunde angelegt.
+            db.run(`
+                INSERT INTO Kunde (Nachname, Vorname, Wohnort, PLZ, Strasse, Kennwort, Benutzername)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            `, ["Muster", "Max", "Musterstadt", "12345", "Musterstraße 1", "passwort123", "maxmuster"]);
+            console.log("Beispielkunde wurde angelegt.");
+        }
+    });
+});
+
+// Alle Kunden aus der Tabelle "Kunde" auf der Konsole ausgeben
+db.all("SELECT * FROM Kunde", (err, rows) => {
+    if (err) {
+        console.error("Fehler beim Auslesen der Kunden:", err.message);
+    } else {
+        console.log("Alle Kunden in der Datenbank:");
+        rows.forEach((row) => {
+            console.log(row);
+        });
+    }
+});
 
 
 
@@ -191,12 +256,12 @@ app.post('/login', (req, res) => {
 
 	//Die Kontrollstruktur prüft auf die Korrektheit der Zugangsdaten 
 	if(kunde.Benutzername == benutzername && kunde.Kennwort == kennwort){
-    console.log("Die Zugangsdaten wurden korrekt einegegeben.")
+    console.log("Die Zugangsdaten wurden korrekt eingegeben.")
 	meldung = "Die Zugangsdaten wurden korrekt eingegeben"
 	
 	// Die Eigenschaft IstEingeloggt wird auf true gesetzt.
 	kunde.IstEingeloggt = true;
-	console.log('kunde.IstEingeloggt: ' + kunde,IstEingeloggt)
+	console.log('kunde.IstEingeloggt: ' + kunde.IstEingeloggt)
 
 
 	// Wenn der Kunde seine Credentials korrekt eingegeben hat, wird ein Cookie gesetzt.
@@ -267,12 +332,28 @@ app.post('/geldAnlegen', (req, res) => {
 	});
 });
 
-app.get('/kontenuebersicht', (req, res) => {
+app.post('/kontenuebersicht', (req, res) => {
 	
 	if(kunde.IstEingeloggt){
 
+		let kontonummer = req.body.Kontonummer;
+		console.log("kontonummer: " + kontonummer)
+
+		let bankleitzahl = "40154530"
+
+		let laenderkennung = "DE"
+		
+		let pruefziffer = IBANValidator.getCheckDigit(laenderkennung, bankleitzahl, kontonummer);
+		
+		let iban = laenderkennung + bankleitzahl + kontonummer;
+
+
+
 		// Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert.
-		res.render('kontenuebersicht.ejs',{});
+		res.render('kontenuebersicht.ejs',{
+			Kontonummer: "",
+			Meldung: ""
+		});
 
 	}else{
 		
@@ -283,25 +364,25 @@ app.get('/kontenuebersicht', (req, res) => {
 	}
 });
 
-app.post('/kontenuebersicht', (req, res) => {
+app.get('/kontenuebersicht', (req, res) => {
+	
 	if(kunde.IstEingeloggt){
 
-		let Kontonummer = req.body.Kontonummer;
-		console.log("Kontonummer: " + Kontonummer)
-
-		let bankleitzahl = "40154530"
-
-		
+		// Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert.
 		res.render('kontenuebersicht.ejs',{
 			Kontonummer: "",
 			Meldung: ""
 		});
+
 	}else{
+		
+		// Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite gerendert.
 		res.render('login.ejs',{
-			...
-		})
+			Meldung: "Melden Sie sich zuerst an."
+		});
 	}
-})
+});
+
 
 
 app.listen(PORT, HOST);
