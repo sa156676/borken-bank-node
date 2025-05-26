@@ -231,7 +231,7 @@ app.get('/hilfe',(req, res)=>{
 app.get('/login', (req, res) => {
 
     kunde.IstEingeloggt = false;
-	console.log("kunde,IstEingeloggt:" + kunde.IstEingeloggt)
+	console.log("kunde.IstEingeloggt:" + kunde.IstEingeloggt)
 
 
 	res.render('login.ejs',{
@@ -254,7 +254,53 @@ app.post('/login', (req, res) => {
 
 	let meldung = "";
 
-	//Die Kontrollstruktur prüft auf die Korrektheit der Zugangsdaten 
+/*
+
+	// Die Datenbank wird abgefragt, ob es einen Kunden mit dem angegebenen Benutzernamen gibt.
+	// Mit SELECT wird eine Abfrage an die Datenbank geschickt.
+	// Der Wert von benutzername wird an die Stelle des ? an die Abfrage übergeben.
+	// * steht für alle Spalten der Tabelle.
+	// Die Zeilen werden mit WHERE gefiltert.
+	db.get("SELECT * FROM Kunde WHERE Benutzername = ?", [benutzername], (err, row) => {
+
+		// Wenn ein Fehler aufgetreten ist, wird eine Fehlermeldung ausgegeben.
+		// Wenn err ungleich null (bzw. leer) ist, dann ist ein Fehler aufgetreten.
+		if (err) {
+
+			// err ist nicht einfach ein String, sondern ein Objekt
+			// Das Objekt hat eine Eigenschaft namens message, die die Fehlermeldung enthält.
+			console.error("Fehler beim Abfragen der Datenbank:", err.message);
+			meldung = "Fehler beim Auslesen des Kunden.";
+			res.render('login.ejs', { Meldung: meldung });
+			return;
+		}
+
+		// Wenn kein Kunde mit dem angegebenen Benutzernamen gefunden wurde, wird eine Fehlermeldung ausgegeben.
+		if (!row) {
+			console.log("Kein Kunde mit diesem Benutzernamen gefunden.");
+			meldung = "Kein Kunde mit diesem Benutzernamen gefunden.";
+			res.render('login.ejs', { Meldung: meldung });
+			return;
+		}
+
+		// Das Kundenobjekt wird mit den Daten aus der Datenbank gefüllt.
+		kunde.Nachname = row.Nachname;
+		kunde.Vorname = row.Vorname;
+		kunde.Wohnort = row.Wohnort;
+		kunde.PLZ = row.PLZ;
+		kunde.Strasse = row.Strasse;
+		kunde.Kennwort = row.Kennwort;
+		kunde.Benutzername = row.Benutzername;
+
+		console.log("Dieser Kunde wurde aus der Datenbank initialisiert : " , kunde);
+	});
+
+
+*/
+
+
+	// Die Kontrollstruktur prüft auf die Korrektheit der Zugangsdaten 
+	// Falls der Kunde nicht gefunden wurde, dann wird die Funktion weiter oben mit einem return verlassen 
 	if(kunde.Benutzername == benutzername && kunde.Kennwort == kennwort){
     console.log("Die Zugangsdaten wurden korrekt eingegeben.")
 	meldung = "Die Zugangsdaten wurden korrekt eingegeben"
